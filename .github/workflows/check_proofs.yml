@@ -25,17 +25,19 @@ jobs:
     - name: Install coq
       if: steps.cache-opam.outputs.cache-hit != 'true'
       run: |
+        export OPAMROOT=$GITHUB_WORKSPACE/.opam
         export PATH=$HOME/bin:$PATH
         sudo apt-get install bubblewrap
-        opam init -c 4.07.1 --root=$GITHUB_WORKSPACE/.opam
-        eval $(opam env --root=$GITHUB_WORKSPACE/.opam)
+        opam init -c 4.07.1
+        eval $(opam env)
         opam repo add coq-released https://coq.inria.fr/opam/released
         opam install coq -y
         coqc --version
     - name: Use coq
       run: |
         export PATH=$HOME/bin:$PATH
-        eval $(opam env --root=GITHUB_WORKSPACE/.opam)
+        export OPAMROOT=$GITHUB_WORKSPACE/.opam
+        eval $(opam env)
         coqc --version
         cd $GITHUB_WORKSPACE
         coqc regex.v --verbose

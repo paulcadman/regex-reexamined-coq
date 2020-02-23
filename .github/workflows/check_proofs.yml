@@ -9,16 +9,30 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Run a one-line script
+    - name: Cache Opam
+      id: cache-opam
+      uses: actions/cache@v1
+      with:
+        path: $HOME/.opam
+        key: ${{ runner.os }}-opam
+    - name: Install coq
+      if: steps.cache-opam.outputs.cache-hit != 'true'
       run: |
-        wget https://raw.github.com/ocaml/opam/master/shell/opam_installer.sh
-        sh ./opam_installer.sh $HOME/bin
+        mkdir $HOME/bin
+        cd $HOME/bin
+        wget https://github.com/ocaml/opam/releases/download/2.0.6/opam-2.0.6-x86_64-linux
+        mv opam-2.0.6-x86_64-linux opam
+        chmod +x opam
+        cd $HOME
         export PATH=$HOME/bin:$PATH
-        opam init
-        eval `opam config env`
-        opam install opam-depext
-        opam-depext coq
-    - name: Run a multi-line script
+        sudo apt-get install bubblewrap
+        opam init -c 4.07.1
+        eval $(opam env)
+        opam repo add coq-released https://coq.inria.fr/opam/released
+        opam install coq
+        coqc --version
+    - name: Use coq
       run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+        export PATH=$HOME/bin:$PATH
+        eval $(opam env)
+        coqc --version

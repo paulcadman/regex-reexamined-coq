@@ -38,3 +38,5 @@ jobs:
         export PATH=$HOME/bin:$PATH
         eval $(opam env)
         coqc --version
+        cd $GITHUB_WORKSPACE
+        coqc regex.v --verbose

@@ -15,14 +15,16 @@ jobs:
       with:
         path: $HOME/.opam
         key: ${{ runner.os }}-opam
-    - name: Install coq
-      if: steps.cache-opam.outputs.cache-hit != 'true'
+    - name: install opam
       run: |
         mkdir $HOME/bin
         cd $HOME/bin
         wget https://github.com/ocaml/opam/releases/download/2.0.6/opam-2.0.6-x86_64-linux
         mv opam-2.0.6-x86_64-linux opam
         chmod +x opam
+    - name: Install coq
+      if: steps.cache-opam.outputs.cache-hit != 'true'
+      run: |
         cd $HOME
         export PATH=$HOME/bin:$PATH
         sudo apt-get install bubblewrap

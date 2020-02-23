@@ -27,7 +27,7 @@ jobs:
       run: |
         export PATH=$HOME/bin:$PATH
         sudo apt-get install bubblewrap
-        opam init -c 4.07.1 --root=GITHUB_WORKSPACE/.opam
+        opam init -c 4.07.1 --root=$GITHUB_WORKSPACE/.opam
         eval $(opam env --root=$GITHUB_WORKSPACE/.opam)
         opam repo add coq-released https://coq.inria.fr/opam/released
         opam install coq -y

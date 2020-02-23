@@ -31,7 +31,7 @@ jobs:
         opam init -c 4.07.1
         eval $(opam env)
         opam repo add coq-released https://coq.inria.fr/opam/released
-        opam install coq
+        opam install coq -y
         coqc --version
     - name: Use coq
       run: |

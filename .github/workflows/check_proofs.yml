@@ -15,7 +15,7 @@ jobs:
         sh ./opam_installer.sh $HOME/bin
         export PATH=$HOME/bin:$PATH
         opam init
-        eval $(opam env)
+        eval `opam config env`
         opam install opam-depext
         opam-depext coq
     - name: Run a multi-line script

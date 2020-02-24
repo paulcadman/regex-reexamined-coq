@@ -22,6 +22,7 @@ jobs:
     - name: install opam
       if: steps.cache-opam.outputs.cache-hit != 'true'
       run: |
+        echo $CACHE_BIN
         mkdir -p $CACHE_BIN
         cd $CACHE_BIN
         wget https://github.com/ocaml/opam/releases/download/2.0.6/opam-2.0.6-x86_64-linux

@@ -13,20 +13,21 @@ jobs:
       id: cache-opam
       uses: actions/cache@v1
       with:
-        path: .opam
-        key: ${{ runner.os }}-opam-coq
+        path: .cache
+        key: ${{ runner.os }}-opam-coq-2
     - name: install opam
+      if: steps.cache-opam.outputs.cache-hit != 'true'
       run: |
-        mkdir $HOME/bin
-        cd $HOME/bin
+        mkdir -p $GITHUB_WORKSPACE/.cache/bin
+        cd $GITHUB_WORKSPACE/.cache/bin
         wget https://github.com/ocaml/opam/releases/download/2.0.6/opam-2.0.6-x86_64-linux
         mv opam-2.0.6-x86_64-linux opam
         chmod +x opam
     - name: Install coq
       if: steps.cache-opam.outputs.cache-hit != 'true'
       run: |
-        export OPAMROOT=$GITHUB_WORKSPACE/.opam
-        export PATH=$HOME/bin:$PATH
+        export OPAMROOT=$GITHUB_WORKSPACE/.cache/.opam
+        export PATH=$GITHUB_WORKSPACE/.cache/bin:$PATH
         sudo apt-get install bubblewrap
         opam init -c 4.07.1
         eval $(opam env)
@@ -35,8 +36,8 @@ jobs:
         coqc --version
     - name: Use coq
       run: |
-        export PATH=$HOME/bin:$PATH
-        export OPAMROOT=$GITHUB_WORKSPACE/.opam
+        export PATH=$GITHUB_WORKSPACE/.cache/bin:$PATH
+        export OPAMROOT=$GITHUB_WORKSPACE/.cache/.opam
         eval $(opam env)
         coqc --version
         cd $GITHUB_WORKSPACE

@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
     env:
-      CACHE_BIN: $GITHUB_WORKSPACE/.cache.bin
+      CACHE_BIN: $GITHUB_WORKSPACE/.cache/bin
       PATH: $CACHE_BIN:$PATH
       OPAMROOT: $GITHUB_WORKSPACE/.cache/.opam
 

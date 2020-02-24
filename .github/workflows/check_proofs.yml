@@ -36,7 +36,7 @@ jobs:
         opam repo add coq-released https://coq.inria.fr/opam/released
         opam install coq -y
         coqc --version
-    - name: Use coq
+    - name: Check proofs with Coq
       run: |
         eval $(opam env)
         coqc --version

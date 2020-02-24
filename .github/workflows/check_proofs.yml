@@ -4,15 +4,15 @@ on: [push]
 
 jobs:
   build:
-    env:
-      CACHE_BIN: $GITHUB_WORKSPACE/.cache/bin
-      PATH: $CACHE_BIN:$PATH
-      OPAMROOT: $GITHUB_WORKSPACE/.cache/.opam
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+    - name: set env variables
+      run: |
+        ::set-env name=CACHE_BIN::$GITHUB_WORKSPACE/.cache/bin
+        ::set-env name=PATH::$CACHE_BIN:$PATH
+        ::set-env name=OPAMROOT::$GITHUB_WORKSPACE/.cache/.opam
     - name: Cache Opam
       id: cache-opam
       uses: actions/cache@v1

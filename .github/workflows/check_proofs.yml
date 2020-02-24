@@ -14,7 +14,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: .opam
-        key: ${{ runner.os }}-opam
+        key: ${{ runner.os }}-opam-coq
     - name: install opam
       run: |
         mkdir $HOME/bin

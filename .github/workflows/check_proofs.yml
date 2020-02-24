@@ -11,7 +11,7 @@ jobs:
     - name: set env variables
       run: |
         echo "::set-env name=CACHE_BIN::$GITHUB_WORKSPACE/.cache/bin"
-        echo "::set-env name=PATH::$CACHE_BIN:$PATH"
+        echo "::set-env name=PATH::$GITHUB_WORKSPACE/.cache/bin:$PATH"
         echo "::set-env name=OPAMROOT::$GITHUB_WORKSPACE/.cache/.opam"
     - name: Cache Opam
       id: cache-opam
